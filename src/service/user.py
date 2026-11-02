@@ -18,3 +18,11 @@ def find_duplicate_emails(users):
             if a["id"] != b["id"] and a["email"] == b["email"] and a["email"] not in dups:
                 dups.append(a["email"])
     return dups
+
+
+def search_users(keyword):
+    conn = get_conn()
+    sql = f"SELECT id, name, email FROM users WHERE name LIKE '%{keyword}%'"
+    rows = conn.execute(sql).fetchall()
+    first = rows[0]
+    return {"count": len(rows), "first": first, "rows": rows}
